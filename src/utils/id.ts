@@ -6,3 +6,5 @@ export const generateId = (prefix: string = ''): string => {
 
 export const generateAssetId = (): string => generateId('a_');
 export const generateLiabilityId = (): string => generateId('l_');
+export const generateEventId = (): string => generateId('ev_');
+export const generatePathId = (): string => generateId('lp_');

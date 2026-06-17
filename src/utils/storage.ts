@@ -1,4 +1,5 @@
-import { AppState, Settings } from '@/types';
+import { AppState, Settings, LifeSandboxState, SimulationParams, LifePath, Milestone } from '@/types';
+import { DEFAULT_PARAMS } from '@/constants/lifeSandbox';
 
 const STORAGE_KEY = 'asset_liability_manager_data';
 const MAX_SIZE = 4 * 1024 * 1024;
@@ -17,13 +18,17 @@ const DEFAULT_STATE: AppState = {
   settings: DEFAULT_SETTINGS,
 };
 
+export interface PersistedState extends AppState {
+  sandbox?: Partial<LifeSandboxState>;
+}
+
 export const loadFromStorage = (): AppState => {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     if (!data) {
       return DEFAULT_STATE;
     }
-    const parsed = JSON.parse(data) as AppState;
+    const parsed = JSON.parse(data) as PersistedState;
     return {
       ...DEFAULT_STATE,
       ...parsed,
@@ -34,7 +39,18 @@ export const loadFromStorage = (): AppState => {
   }
 };
 
-export const saveToStorage = (state: AppState): boolean => {
+export const loadSandboxFromStorage = (): Partial<LifeSandboxState> | null => {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (!data) return null;
+    const parsed = JSON.parse(data) as PersistedState;
+    return parsed.sandbox || null;
+  } catch {
+    return null;
+  }
+};
+
+export const saveToStorage = (state: AppState | PersistedState): boolean => {
   try {
     const data = JSON.stringify(state);
     if (data.length > MAX_SIZE) {
@@ -62,11 +78,11 @@ export const clearStorage = (): void => {
   localStorage.removeItem(STORAGE_KEY);
 };
 
-export const exportToJson = (state: AppState): string => {
+export const exportToJson = (state: AppState | PersistedState): string => {
   return JSON.stringify(state, null, 2);
 };
 
-export const importFromJson = (jsonStr: string): AppState | null => {
+export const importFromJson = (jsonStr: string): PersistedState | null => {
   try {
     const parsed = JSON.parse(jsonStr);
     if (
@@ -75,7 +91,7 @@ export const importFromJson = (jsonStr: string): AppState | null => {
       'snapshots' in parsed &&
       'settings' in parsed
     ) {
-      return parsed as AppState;
+      return parsed as PersistedState;
     }
     return null;
   } catch {

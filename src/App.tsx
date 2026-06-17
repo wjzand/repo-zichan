@@ -9,6 +9,9 @@ import { LiabilityDetailPage } from '@/pages/Liabilities/Detail';
 import { ProfilePage } from '@/pages/Profile';
 import { ReportPage } from '@/pages/Profile/Report';
 import { SettingsPage } from '@/pages/Profile/Settings';
+import { SandboxIndexPage } from '@/pages/Sandbox/Index';
+import { SandboxFreedomPage } from '@/pages/Sandbox/Freedom';
+import { SandboxMilestonesPage } from '@/pages/Sandbox/Milestones';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { useStore } from '@/store/useStore';
 import { useEffect } from 'react';
@@ -26,7 +29,7 @@ const AutoSnapshot = () => {
 
 const NavWrapper = () => {
   const location = useLocation();
-  const mainPaths = ['/', '/assets', '/liabilities', '/profile'];
+  const mainPaths = ['/', '/assets', '/liabilities', '/sandbox', '/profile'];
   const showNav = mainPaths.includes(location.pathname);
   return showNav ? <BottomNav /> : null;
 };
@@ -49,6 +52,9 @@ export default function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/profile/report" element={<ReportPage />} />
           <Route path="/profile/settings" element={<SettingsPage />} />
+          <Route path="/sandbox" element={<SandboxIndexPage />} />
+          <Route path="/sandbox/freedom" element={<SandboxFreedomPage />} />
+          <Route path="/sandbox/milestones" element={<SandboxMilestonesPage />} />
         </Routes>
         <NavWrapper />
       </div>

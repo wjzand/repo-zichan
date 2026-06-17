@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Wallet, CreditCard, User } from 'lucide-react';
+import { LayoutDashboard, Wallet, CreditCard, User, TrendingUp } from 'lucide-react';
 
 const navItems = [
   { path: '/', label: '总览', Icon: LayoutDashboard },
   { path: '/assets', label: '资产', Icon: Wallet },
   { path: '/liabilities', label: '负债', Icon: CreditCard },
+  { path: '/sandbox', label: '沙盘', Icon: TrendingUp },
   { path: '/profile', label: '我的', Icon: User },
 ];
 
