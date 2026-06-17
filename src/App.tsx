@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { OverviewPage } from '@/pages/Overview';
 import { AssetsListPage } from '@/pages/Assets/List';
 import { AssetFormPage } from '@/pages/Assets/Form';
@@ -24,6 +24,13 @@ const AutoSnapshot = () => {
   return null;
 };
 
+const NavWrapper = () => {
+  const location = useLocation();
+  const mainPaths = ['/', '/assets', '/liabilities', '/profile'];
+  const showNav = mainPaths.includes(location.pathname);
+  return showNav ? <BottomNav /> : null;
+};
+
 export default function App() {
   return (
     <Router>
@@ -43,7 +50,7 @@ export default function App() {
           <Route path="/profile/report" element={<ReportPage />} />
           <Route path="/profile/settings" element={<SettingsPage />} />
         </Routes>
-        <BottomNav />
+        <NavWrapper />
       </div>
     </Router>
   );

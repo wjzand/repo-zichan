@@ -167,7 +167,7 @@ export const LiabilityFormPage = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 safe-area-bottom">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 safe-bottom z-50">
         <div className="max-w-md mx-auto flex gap-3">
           <Button variant="secondary" fullWidth onClick={() => navigate(-1)}>
             取消
